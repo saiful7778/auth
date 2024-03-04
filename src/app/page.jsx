@@ -4,7 +4,7 @@ import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 const HomePage = () => {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-4 overflow-hidden text-center">
+    <div className="flex h-[calc(100vh-1rem)] w-full flex-col items-center justify-center gap-4 overflow-hidden text-center">
       <div className="bg-blue-blob absolute -left-96 top-0 z-0 h-[300px] w-[900px] rotate-45 rounded-full blur-[100px] filter"></div>
       <h1 className="text-6xl font-bold uppercase">Welcome to home page</h1>
       <p className="text-gray-400">
