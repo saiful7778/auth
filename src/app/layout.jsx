@@ -12,8 +12,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="w-full min-h-screen bg-gray-900 text-gray-50 overflow-x-hidden">
-          <div className="container p-2">{children}</div>
+        <div className="main-bg relative min-h-screen w-full overflow-x-hidden bg-gray-900 text-gray-50">
+          <div className="container">{children}</div>
         </div>
       </body>
     </html>
