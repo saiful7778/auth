@@ -34,7 +34,7 @@ const Button = ({
   size = "md",
   shape,
   href,
-  ...props
+  disabled,
 }) => {
   const isLink = typeof href !== "undefined";
   const Component = isLink ? Link : "button";
@@ -56,7 +56,7 @@ const Button = ({
       )}
       href={href}
       type={isLink ? undefined : type}
-      {...props}
+      disabled={disabled}
     >
       {children}
     </Component>
