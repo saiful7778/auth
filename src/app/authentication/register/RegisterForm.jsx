@@ -5,21 +5,40 @@ import { registerSchema } from "@/lib/schemas/authentication";
 import Input from "@/components/formik/Input";
 import Password from "@/components/formik/Password";
 import Button from "@/components/utilities/Button";
+import createUser from "@/lib/actions/user/createUser";
+import SuccessInline from "@/components/status/SuccessInline";
+import ErrorInline from "@/components/status/ErrorInline";
 
 const RegisterForm = () => {
   const [spinner, setSpinner] = useState(false);
 
+  const [successStatus, setSuccessStatus] = useState("");
+  const [errorStatus, setErrorStatus] = useState("");
+
   const initialValues = {
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
   };
 
-  const handleSubmit = async (e) => {
-    setSpinner(true);
-    console.log(e);
+  const handleSpinner = () => setSpinner((l) => !l);
+
+  const handleSubmit = async (e, { resetForm }) => {
+    handleSpinner();
+    setSuccessStatus("");
+    setErrorStatus("");
+    try {
+      const res = await createUser(e);
+      if (!res.success) {
+        throw res.message;
+      }
+      setSuccessStatus(res.message);
+    } catch (err) {
+      setErrorStatus(err);
+    }
+    resetForm();
+    handleSpinner();
   };
 
   return (
@@ -29,23 +48,14 @@ const RegisterForm = () => {
       onSubmit={handleSubmit}
     >
       <Form className="my-4 space-y-2">
-        <div className="flex items-start justify-between gap-2">
-          <Input
-            type="text"
-            label="First name"
-            name="firstName"
-            placeholder="First name"
-            disabled={spinner}
-            required
-          />
-          <Input
-            type="text"
-            label="Last name"
-            name="lastName"
-            placeholder="Last name"
-            disabled={spinner}
-          />
-        </div>
+        <Input
+          type="text"
+          label="Full name"
+          name="fullName"
+          placeholder="Full name"
+          disabled={spinner}
+          required
+        />
         <Input
           type="email"
           label="Email address"
@@ -66,6 +76,8 @@ const RegisterForm = () => {
           label="Confirm Password"
           disabled={spinner}
         />
+        <SuccessInline message={successStatus} />
+        <ErrorInline message={errorStatus} />
         <Button
           type="submit"
           className="w-full"
